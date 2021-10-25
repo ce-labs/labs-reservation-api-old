@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getCourses, getLabs, getScheduleData, getScheduleDays, getStaff, getUserTypes } = require('../components/utils.component');
+const { getCourses, getLabs, getScheduleData, getScheduleDays, getStaff, getUserTypes } = require('../../components/utils.component');
 
 router.get('/courses', getCourses);
 
