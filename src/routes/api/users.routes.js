@@ -1,16 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const { getAllUsers, getSingleUser } = require('../../components/users.component');
+const bodyParser = require('body-parser');
+const { getAllUsers, getSingleUser, createUser, updateUser, removeUser } = require('../../components/users.component');
+
+var jsonParser = bodyParser.json();
 
 router.get('/all', getAllUsers);
 
 router.get('/:userId', getSingleUser);
 
-// create user
+router.post('/', jsonParser, createUser);
 
-// modify user
+router.put('/:userId', jsonParser, updateUser);
 
-// delete user
+router.delete('/:userId', removeUser);
 
 
 module.exports = router;
