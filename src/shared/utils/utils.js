@@ -19,4 +19,10 @@ function setReservationId(lab, date, scheduleSection){
     return reservationId;
 }
 
-module.exports = { getFullDate, jsonConcat, setReservationId } 
+function setBlockadeId(lab, date, scheduleSection, day){
+    var input = lab.concat('&').concat(date).concat('&').concat(scheduleSection).concat(day);
+    var blockadeId = input.replace('/','').replace('/','').replace(':','').replace(':','').replace('-','');
+    return blockadeId;
+}
+
+module.exports = { getFullDate, jsonConcat, setReservationId, setBlockadeId } 

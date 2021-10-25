@@ -1,29 +1,29 @@
 const { getConnection } = require('../shared/connection');
-const { getFullDate, jsonConcat, setReservationId } = require('../shared/utils/utils')
+const { getFullDate, jsonConcat, setBlockadeId } = require('../shared/utils/utils')
 
-const getAllReservations = (req, res) => {
+const getAllBlockades = (req, res) => {
     const databaseConnection = getConnection();
-    databaseConnection.collection("reservations").find({"type":"reservation"}, { projection: { } } ).limit(20)
+    databaseConnection.collection("reservations").find({"type":"blockade"}, { projection: { } } ).limit(20)
     .toArray(function(error, data) {
         if (error) {
-            res.status(400).send('⛔️ An error occurred getting all reservations ... \n[Error]: ' + error);
+            res.status(400).send('⛔️ An error occurred getting all blockades ... \n[Error]: ' + error);
         } else {
             res.status(200).send(data);
         }
       });
 };
 
-const getSingleReservation = (req, res) => {
-    let reservationId = req.params.reservationId;
+const getSingleBlockade = (req, res) => {
+    let blockadeId = req.params.blockadeId;
 
     const databaseConnection = getConnection();
-    databaseConnection.collection("reservations").findOne({"reservationId": reservationId}, { projection: { } }, 
+    databaseConnection.collection("reservations").findOne({"reservationId": blockadeId}, { projection: { } }, 
         function(error, data) {
             if (error) {
-                res.status(400).send('⛔️ An error occurred getting single reservation ... \n[Error]: ' + error);
+                res.status(400).send('⛔️ An error occurred getting single blockade ... \n[Error]: ' + error);
             } else {
                 if(data === null){
-                    res.status(404).send('⚠️ There are no reservations with the specified specifications ...');
+                    res.status(404).send('⚠️ There are no blockades with the specified specifications ...');
                 } else{
                     res.status(200).send(data);
                 }
@@ -31,14 +31,14 @@ const getSingleReservation = (req, res) => {
       });
 };
 
-const createReservation = (req, res) => {
-    let type = 'reservation';
+const createBlockade = (req, res) => {
+    let type = 'blockade';
     let year = req.body.year;
     let semester = req.body.semester;
-    let week = req.body.week;
+    let week = 'all';
     let laboratory = req.body.laboratory;
     let day = req.body.day;
-    let date = req.body.date;
+    let date = 'all';
     let scheduleSection = req.body.scheduleSection;
     let description = req.body.description;
     let manager = req.body.manager;
@@ -50,11 +50,11 @@ const createReservation = (req, res) => {
     let modificationAuthorMail = '';
     let modificationDate = '';
 
-    let reservationId = setReservationId(laboratory, date, scheduleSection);
+    let blockadeId = setBlockadeId(laboratory, date, scheduleSection, day);
 
 
-    var reservation = {
-        reservationId: reservationId,
+    var blockade = {
+        blockadeId: blockadeId,
         type: type,
         year: year,
         semester: semester,
@@ -75,39 +75,40 @@ const createReservation = (req, res) => {
     };
 
     const databaseConnection = getConnection();
-    databaseConnection.collection('reservations').insertOne(reservation, (error, data) => {
+    databaseConnection.collection('reservations').insertOne(blockade, (error, data) => {
         if(error) {
-            res.status(400).send('⛔️ An error occurred creating reservation ... \n[Error]: ' + error);  
+            res.status(400).send('⛔️ An error occurred creating blockade ... \n[Error]: ' + error);  
         } else {
-            res.status(200).send('☑️ The reservation was created successfully ... ');
+            res.status(200).send('☑️ The blockade was created successfully ... ');
         }
     });
 }
 
+
 // the following data can be changed: description, manager, showDescription
-const updateReservation = (req, res) => {
-    let reservationId = req.params.reservationId;
+const updateBlockade = (req, res) => {
+    let blockadeId = req.params.blockadeId;
     let modificationDate = { modificationDate: getFullDate() };
     var jsonBodyAndModificationDate = jsonConcat(req.body, modificationDate)
     const databaseConnection = getConnection();
      
     var newData = { $set: jsonBodyAndModificationDate };
 
-    databaseConnection.collection('reservations').updateOne({'reservationId': reservationId}, newData, 
+    databaseConnection.collection('reservations').updateOne({'reservationId': blockadeId}, newData, 
         function(error) {
             if(error) {
-                res.status(400).send('⛔️ An error occurred updating reservation ... \n[Error]: ' + error);  
+                res.status(400).send('⛔️ An error occurred updating blockade ... \n[Error]: ' + error);  
             } else {
-                res.status(200).send('☑️ The reservation was modified successfully ... ');
+                res.status(200).send('☑️ The blockade was modified successfully ... ');
             }
     });
 }
 
-const removeReservation = (req, res) => {
-    let reservationId = req.params.reservationId;
+const removeBlockade = (req, res) => {
+    let blockadeId = req.params.blockadeId;
 
     const databaseConnection = getConnection();
-    databaseConnection.collection('reservations').deleteMany({'reservationId': reservationId}, 
+    databaseConnection.collection('reservations').deleteMany({'reservationId': blockadeId}, 
         function(error) {
             if(error) {
                 res.status(400).send('⛔️ An error occurred deleting reservation ... \n[Error]: ' + error);  
@@ -118,4 +119,4 @@ const removeReservation = (req, res) => {
 }
 
 
-module.exports = { getAllReservations, getSingleReservation, createReservation, updateReservation, removeReservation }
+module.exports = { getAllBlockades, getSingleBlockade, createBlockade, updateBlockade, removeBlockade }
