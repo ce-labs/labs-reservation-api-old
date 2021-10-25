@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const bodyParser = require('body-parser');
+const { verifyUser } = require('../../components/auth.component')
 
-router.get('/', (req, res) => {res.send('Auth Routes')});
+var jsonParser = bodyParser.json();
+
+router.post('/login', jsonParser, verifyUser);
 
 module.exports = router;
