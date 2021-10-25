@@ -6,7 +6,7 @@ chai.use(chaiHttp);
 const url = 'http://localhost:5000';
 
 
-describe('AUTH - Comunicación con la base de datos', () => {
+describe('AUTH - Communication with the database', () => {
 
     it('login request - incorrect userId', (done) => {
         chai.request(url)

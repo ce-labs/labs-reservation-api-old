@@ -6,7 +6,7 @@ chai.use(chaiHttp);
 const url = 'http://localhost:5000';
 
 
-describe('RESERVATIONS - Comunicación con la base de datos', () => {
+describe('RESERVATIONS - Communication with the database', () => {
 
     it('getAllReservations ', function(done){
         chai.request(url)

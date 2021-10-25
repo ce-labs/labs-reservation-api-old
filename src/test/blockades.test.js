@@ -6,7 +6,7 @@ chai.use(chaiHttp);
 const url = 'http://localhost:5000';
 
 
-describe('BLOCKADES - Comunicación con la base de datos', () => {
+describe('BLOCKADES - Communication with the database', () => {
 
     it('getAllBlockades ', function(done){
         chai.request(url)
