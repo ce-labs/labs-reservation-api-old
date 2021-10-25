@@ -1,8 +1,6 @@
 const { getConnection } = require('../shared/connection');
 const { getFullDate, jsonConcat, setReservationId } = require('../shared/utils/utils')
 
-
-
 const getAllReservations = (req, res) => {
     const databaseConnection = getConnection();
     databaseConnection.collection("reservations").find({"type":"reservation"}, { projection: { } } ).limit(20)

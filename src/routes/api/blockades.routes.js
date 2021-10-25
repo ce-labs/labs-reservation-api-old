@@ -1,6 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const bodyParser = require('body-parser');
 
-router.get('/', (req, res) => {res.send('Blockades Routes')});
+const { getAllBlockades, getSingleBlockade } = require('../../components/blockades.component');
+
+var jsonParser = bodyParser.json();
+
+router.get('/all', getAllBlockades);
+
+router.get('/:blockadeId', getSingleBlockade);
+
 
 module.exports = router;
