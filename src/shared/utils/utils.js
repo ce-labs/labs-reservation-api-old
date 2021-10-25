@@ -13,4 +13,10 @@ function jsonConcat(o1, o2) {
     return o1;
 }
 
-module.exports = { getFullDate, jsonConcat } 
+function setReservationId(lab, date, scheduleSection){
+    var input = lab.concat('&').concat(date).concat('&').concat(scheduleSection);
+    var reservationId = input.replace('/','').replace('/','').replace(':','').replace(':','').replace('-','');
+    return reservationId;
+}
+
+module.exports = { getFullDate, jsonConcat, setReservationId } 
