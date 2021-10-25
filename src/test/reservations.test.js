@@ -3,7 +3,7 @@ let chaiHttp = require('chai-http');
 const expect = require('chai').expect;
 
 chai.use(chaiHttp);
-const url = 'http://localhost:5000';
+const url = 'https://labs-reservation-api.herokuapp.com/';
 
 
 describe('RESERVATIONS - Communication with the database', () => {
