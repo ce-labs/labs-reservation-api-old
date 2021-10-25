@@ -2,7 +2,7 @@ const { getConnection } = require('../shared/connection');
 
 const getCourses = (req, res) => {
     const databaseConnection = getConnection();
-    databaseConnection.collection("coursesList").find({}, { projection: { _id: 0, courseId: 0 } } ).limit(20)
+    databaseConnection.collection("coursesList").find({}, { projection: { } } ).limit(20)
     .toArray(function(error, data) {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting courses data ... \n[Error]: ' + error);
@@ -14,7 +14,7 @@ const getCourses = (req, res) => {
 
 const getLabs = (req, res) => {
     const databaseConnection = getConnection();
-    databaseConnection.collection("labsList").find({}, { projection: { _id: 0, courseId: 0 } } ).limit(20)
+    databaseConnection.collection("labsList").find({}, { projection: { } } ).limit(20)
     .toArray(function(error, data) {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting labs data ... \n[Error]: ' + error);
@@ -26,7 +26,7 @@ const getLabs = (req, res) => {
 
 const getScheduleData = (req, res) => {
     const databaseConnection = getConnection();
-    databaseConnection.collection("scheduleData").find({}, { projection: { _id: 0, courseId: 0 } } ).limit(20)
+    databaseConnection.collection("scheduleData").find({}, { projection: { } } ).limit(20)
     .toArray(function(error, data) {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting schedule data ... \n[Error]: ' + error);
@@ -38,7 +38,7 @@ const getScheduleData = (req, res) => {
 
 const getScheduleDays = (req, res) => {
     const databaseConnection = getConnection();
-    databaseConnection.collection("scheduleDays").find({}, { projection: { _id: 0, courseId: 0 } } ).limit(20)
+    databaseConnection.collection("scheduleDays").find({}, { projection: { } } ).limit(20)
     .toArray(function(error, data) {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting days ... \n[Error]: ' + error);
@@ -50,7 +50,7 @@ const getScheduleDays = (req, res) => {
 
 const getStaff = (req, res) => {
     const databaseConnection = getConnection();
-    databaseConnection.collection("staff").find({}, { projection: { _id: 0, courseId: 0 } } ).limit(20)
+    databaseConnection.collection("staff").find({}, { projection: { } } ).limit(20)
     .toArray(function(error, data) {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting staff  ... \n[Error]: ' + error);
@@ -62,7 +62,7 @@ const getStaff = (req, res) => {
 
 const getUserTypes = (req, res) => {
     const databaseConnection = getConnection();
-    databaseConnection.collection("userTypes").find({}, { projection: { _id: 0, courseId: 0 } } ).limit(20)
+    databaseConnection.collection("userTypes").find({}, { projection: { } } ).limit(20)
     .toArray(function(error, data) {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting user types ... \n[Error]: ' + error);
