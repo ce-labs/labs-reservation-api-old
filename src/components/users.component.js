@@ -89,6 +89,22 @@ const updateUser = (req, res) => {
     });
 }
 
+const setUserStatus = (req, res) => {
+    let userId = req.params.userId;
+    const databaseConnection = getConnection();
+     
+    var newData = { $set: req.body };
+
+    databaseConnection.collection('users').updateOne({'userId': userId}, newData, 
+        function(error) {
+            if(error) {
+                res.status(400).send('⛔️ An error occurred updating users ... \n[Error]: ' + error);  
+            } else {
+                res.status(200).send('☑️ The user status was modified successfully ... ');
+            }
+    });
+}
+
 const removeUser = (req, res) => {
     let userId = req.params.userId;
 
@@ -103,4 +119,5 @@ const removeUser = (req, res) => {
     });
 }
 
-module.exports = { getAllUsers, getSingleUser, createUser, updateUser, removeUser }
+
+module.exports = { getAllUsers, getSingleUser, createUser, updateUser, setUserStatus, removeUser }

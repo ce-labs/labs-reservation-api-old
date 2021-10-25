@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const { getAllUsers, getSingleUser, createUser, updateUser, removeUser } = require('../../components/users.component');
+const { getAllUsers, getSingleUser, createUser, updateUser, setUserStatus, removeUser } = require('../../components/users.component');
 
 var jsonParser = bodyParser.json();
 
@@ -13,7 +13,8 @@ router.post('/', jsonParser, createUser);
 
 router.put('/:userId', jsonParser, updateUser);
 
-router.delete('/:userId', removeUser);
+router.put('/status/:userId', jsonParser, setUserStatus);
 
+router.delete('/:userId', removeUser);
 
 module.exports = router;
