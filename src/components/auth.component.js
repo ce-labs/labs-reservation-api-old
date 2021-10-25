@@ -13,12 +13,12 @@ const verifyUser = (req, res) => {
         if(error) {
             res.status(400).send('⛔️ An error occurred verifying the user ... \n[Error]: ' + error);  
         } else if (!user) {
-            res.status(401).send('⚠️ There are no users with the specified specifications ... \n[Error]: Incorrect email or password');
+            res.status(401).send('⚠️ There are no users with the specified specifications ... \n[Error]: Incorrect userId');
         } 
         else {
             let response = isCorrectPassword(password, user.password);
             if(!response) {
-                res.status(401).send('⚠️ There are no users with the specified specifications ... \n[Error]: Incorrect email or password');
+                res.status(401).send('⚠️ There are no users with the specified specifications ... \n[Error]: Incorrect userId or password');
             } else {
                 const payload = { userId };
                 const token = jwt.sign(payload, secret, {
