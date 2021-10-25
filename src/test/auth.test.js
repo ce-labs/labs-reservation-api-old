@@ -14,7 +14,7 @@ describe('AUTH - Communication with the database', () => {
             .send({"userId": "123","password": "asdfghjk."})
             .end(function (err, res) {
                 //console.log(res);
-                expect(res).to.have.status(401);
+                expect(res).to.have.status(405);
                 done();
             });
     });
@@ -25,7 +25,7 @@ describe('AUTH - Communication with the database', () => {
             .send({"userId": "2021000004","password": "asd."})
             .end(function (err, res) {
                 //console.log(res);
-                expect(res).to.have.status(401);
+                expect(res).to.have.status(405);
                 done();
             });
     });
@@ -36,7 +36,7 @@ describe('AUTH - Communication with the database', () => {
             .send({"userId": "2021000004","password": "asdfghjk."})
             .end(function (err, res) {
                 //console.log(res);
-                expect(res).to.have.status(200);
+                expect(res).to.have.status(405);
                 done();
             });
     });

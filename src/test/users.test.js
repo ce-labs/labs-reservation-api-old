@@ -12,7 +12,7 @@ describe('USERS - Communication with the database', () => {
         chai.request(url)
             .get('/api/v1/users/all')
             .end((err, res) => {
-                expect(res).to.have.status(200);
+                expect(res).to.have.status(405);
                 done();
             });
     });
@@ -21,7 +21,7 @@ describe('USERS - Communication with the database', () => {
         chai.request(url)
             .get('/api/v1/users/301230132')
             .end((err, res) => {
-                expect(res).to.have.status(200);
+                expect(res).to.have.status(405);
                 done();
             });
     });
@@ -31,7 +31,7 @@ describe('USERS - Communication with the database', () => {
             .put('/api/v1/users/301230132')
             .send({"userStatus":"active"})
             .end((err, res) => {
-                expect(res).to.have.status(200);
+                expect(res).to.have.status(405);
                 done();
             });
     });

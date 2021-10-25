@@ -12,7 +12,7 @@ describe('BLOCKADES - Communication with the database', () => {
         chai.request(url)
             .get('/api/v1/blockades/all')
             .end((err, res) => {
-                expect(res).to.have.status(200);
+                expect(res).to.have.status(405);
                 done();
             });
     });
@@ -21,7 +21,7 @@ describe('BLOCKADES - Communication with the database', () => {
         chai.request(url)
             .get('/api/v1/blockades/F207&all&15001650&Lunes')
             .end((err, res) => {
-                expect(res).to.have.status(200);
+                expect(res).to.have.status(405);
                 done();
             });
     });

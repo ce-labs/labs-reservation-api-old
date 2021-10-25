@@ -12,7 +12,7 @@ describe('RESERVATIONS - Communication with the database', () => {
         chai.request(url)
             .get('/api/v1/reservations/all')
             .end((err, res) => {
-                expect(res).to.have.status(200);
+                expect(res).to.have.status(405);
                 done();
             });
     });
@@ -21,7 +21,7 @@ describe('RESERVATIONS - Communication with the database', () => {
         chai.request(url)
             .get('/api/v1/reservations/F207&10252021&730920')
             .end((err, res) => {
-                expect(res).to.have.status(200);
+                expect(res).to.have.status(405);
                 done();
             });
     });
