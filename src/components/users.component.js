@@ -31,6 +31,24 @@ const getSingleUser = (req, res) => {
       });
 };
 
+const getUserType = (req, res) => {
+    let userId = req.params.userId;
+
+    const databaseConnection = getConnection();
+    databaseConnection.collection("users").findOne({"userId": userId}, { projection: { } }, 
+        function(error, data) {
+            if (error) {
+                res.status(400).send('⛔️ An error occurred getting single users ... \n[Error]: ' + error);
+            } else {
+                if(data === null){
+                    res.status(404).send('⚠️ There are no users with the specified specifications ...');
+                } else{
+                    res.status(200).send(data.userType);
+                }
+            }
+      });
+};
+
 const createUser = (req, res) => {
     let userId = req.body.userId;
     let password = req.body.password;
@@ -120,4 +138,4 @@ const removeUser = (req, res) => {
 }
 
 
-module.exports = { getAllUsers, getSingleUser, createUser, updateUser, setUserStatus, removeUser }
+module.exports = { getAllUsers, getSingleUser, getUserType, createUser, updateUser, setUserStatus, removeUser }
