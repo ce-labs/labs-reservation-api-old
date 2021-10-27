@@ -7,7 +7,13 @@ const swaggerSpecs = swaggerJsDoc(swaggerOptions);
 const PORT = process.env.PORT || 5000;
 
 const app = express();
-app.use(cors({origin: 'http://localhost:5000'}));
+app.use(cors());
+app.all('/', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header('Access-Control-Allow-Methods', 'POST,GET,PUT,DELETE');
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+});
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpecs));
 
