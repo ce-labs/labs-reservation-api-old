@@ -49,6 +49,39 @@ const getUserType = (req, res) => {
       });
 };
 
+// search for matches within firstName, lastName, userId, userType
+const searchUsers = (req, res) => {
+    var params = JSON.parse(req.params.data);
+    var name = params.category;
+    var regex = params.filter;
+    var query;
+    switch (name) {
+        case "firstName":
+            query = {"firstName": new RegExp(regex) };
+            break;
+        case "lastName":
+            query = {"lastName": new RegExp(regex) };
+            break;
+        case "userId":
+            query = {"userId": new RegExp(regex) };
+            break;
+        case "userType":
+            query = {"userType": new RegExp(regex) };
+            break;
+    }
+    console.log(query);
+
+    const databaseConnection = getConnection();
+    databaseConnection.collection("users").find(query, { projection: { } } ).limit(20)
+    .toArray(function(error, data) {
+        if (error) {
+            res.status(400).send('⛔️ An error occurred getting users ... \n[Error]: ' + error);
+        } else {
+            res.status(200).send(data);
+        }
+      });
+}
+
 const createUser = (req, res) => {
     let userId = req.body.userId;
     let password = req.body.password;
@@ -138,4 +171,4 @@ const removeUser = (req, res) => {
 }
 
 
-module.exports = { getAllUsers, getSingleUser, getUserType, createUser, updateUser, setUserStatus, removeUser }
+module.exports = { getAllUsers, getSingleUser, getUserType, searchUsers, createUser, updateUser, setUserStatus, removeUser }
