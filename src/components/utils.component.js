@@ -72,4 +72,16 @@ const getUserTypes = (req, res) => {
       });
 };
 
-module.exports = { getCourses, getLabs, getScheduleData, getScheduleDays, getStaff, getUserTypes }
+const getSemesterData = (req, res) => {
+    const databaseConnection = getConnection();
+    databaseConnection.collection("semester").find({}, { projection: { } } ).limit(20)
+    .toArray(function(error, data) {
+        if (error) {
+            res.status(400).send('⛔️ An error occurred getting courses data ... \n[Error]: ' + error);
+        } else {
+            res.status(200).send(data);
+        }
+      });
+};
+
+module.exports = { getCourses, getLabs, getScheduleData, getScheduleDays, getStaff, getUserTypes, getSemesterData }
