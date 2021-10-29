@@ -31,6 +31,21 @@ const getSingleReservation = (req, res) => {
       });
 };
 
+const getSemesterReservations = (req, res) => {
+    let currentYear = req.params.year;
+    let currentSemester = req.params.semester;
+
+    const databaseConnection = getConnection();
+    databaseConnection.collection("reservations").find({"type":"reservation", "year":currentYear, "semester":currentSemester}, { projection: { } } ).limit(20)
+    .toArray(function(error, data) {
+        if (error) {
+            res.status(400).send('⛔️ An error occurred getting all reservations ... \n[Error]: ' + error);
+        } else {
+            res.status(200).send(data);
+        }
+      });
+};
+
 const createReservation = (req, res) => {
     let type = 'reservation';
     let year = req.body.year;
@@ -118,4 +133,4 @@ const removeReservation = (req, res) => {
 }
 
 
-module.exports = { getAllReservations, getSingleReservation, createReservation, updateReservation, removeReservation }
+module.exports = { getAllReservations, getSingleReservation, getSemesterReservations, createReservation, updateReservation, removeReservation }

@@ -31,6 +31,23 @@ const getSingleBlockade = (req, res) => {
       });
 };
 
+const getSemesterBlockades= (req, res) => {
+    let currentYear = req.params.year;
+    let currentSemester = req.params.semester;
+
+    console.log(currentYear, currentSemester)
+
+    const databaseConnection = getConnection();
+    databaseConnection.collection("reservations").find({"type":"blockade", "year":currentYear, "semester":currentSemester}, { projection: { } } ).limit(20)
+    .toArray(function(error, data) {
+        if (error) {
+            res.status(400).send('⛔️ An error occurred getting all reservations ... \n[Error]: ' + error);
+        } else {
+            res.status(200).send(data);
+        }
+      });
+};
+
 const createBlockade = (req, res) => {
     let type = 'blockade';
     let year = req.body.year;
@@ -119,4 +136,4 @@ const removeBlockade = (req, res) => {
 }
 
 
-module.exports = { getAllBlockades, getSingleBlockade, createBlockade, updateBlockade, removeBlockade }
+module.exports = { getAllBlockades, getSingleBlockade, getSemesterBlockades, createBlockade, updateBlockade, removeBlockade }

@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const { getAllReservations, getSingleReservation, createReservation, updateReservation, removeReservation } = require('../../components/reservations.component');
+const { getAllReservations, getSingleReservation, createReservation, updateReservation, removeReservation, getSemesterReservations } = require('../../components/reservations.component');
 
 var jsonParser = bodyParser.json();
 
 router.get('/all', getAllReservations);
 
 router.get('/:reservationId', getSingleReservation);
+
+router.get('/:year/:semester', jsonParser, getSemesterReservations);
 
 router.post('/', jsonParser, createReservation);
 
