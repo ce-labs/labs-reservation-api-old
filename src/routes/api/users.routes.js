@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const { getAllUsers, getSingleUser, getUserType, searchUsers, createUser, updateUser, setUserStatus, removeUser, getUserStatus } = require('../../components/users.component');
+const { getAllUsers, getSingleUser, getUserType, searchUsers, createUser, updateUser, setUserStatus, removeUser, getUserStatus, getReservationsNumber } = require('../../components/users.component');
 
 var jsonParser = bodyParser.json();
 
@@ -12,6 +12,8 @@ router.get('/:userId', getSingleUser);
 router.get('/userType/:userId', getUserType);
 
 router.get('/userStatus/:userId', getUserStatus);
+
+router.get('/reservations/:userId', getReservationsNumber);
 
 router.get('/search/:data', searchUsers);
 

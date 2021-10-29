@@ -68,6 +68,24 @@ const getUserStatus = (req, res) => {
       });
 };
 
+const getReservationsNumber = (req, res) => {
+    let userId = req.params.userId;
+
+    const databaseConnection = getConnection();
+    databaseConnection.collection("users").findOne({"userId": userId}, { projection: { } }, 
+        function(error, data) {
+            if (error) {
+                res.status(400).send('⛔️ An error occurred getting single users ... \n[Error]: ' + error);
+            } else {
+                if(data === null){
+                    res.status(404).send('⚠️ There are no users with the specified specifications ...');
+                } else{
+                    res.status(200).send(data.reservations);
+                }
+            }
+      });
+};
+
 
 // search for matches within firstName, lastName, userId, userType
 const searchUsers = (req, res) => {
@@ -191,4 +209,4 @@ const removeUser = (req, res) => {
 }
 
 
-module.exports = { getAllUsers, getSingleUser, getUserType, getUserStatus, searchUsers, createUser, updateUser, setUserStatus, removeUser }
+module.exports = { getAllUsers, getSingleUser, getUserType, getUserStatus, getReservationsNumber, searchUsers, createUser, updateUser, setUserStatus, removeUser }
