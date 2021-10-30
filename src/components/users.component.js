@@ -150,13 +150,24 @@ const createUser = (req, res) => {
     };
 
     const databaseConnection = getConnection();
-    databaseConnection.collection('users').insertOne(user, (error, data) => {
-        if(error) {
-            res.status(400).send('⛔️ An error occurred creating users ... \n[Error]: ' + error);  
-        } else {
-            res.status(200).send('☑️ The user was created successfully ... ');
-        }
-    });
+    databaseConnection.collection("users").findOne({"userId": userId}, { projection: { } }, 
+        function(error, data) {
+            if (error) {
+                res.status(400).send('⛔️ An error occurred getting single users ... \n[Error]: ' + error);
+            } else {
+                if(data === null){
+                    databaseConnection.collection('users').insertOne(user, (error, data) => {
+                        if(error){
+                            res.status(400).send('⛔️ An error occurred creating users ... \n[Error]: ' + error);  
+                        } else {
+                            res.status(200).send('☑️ The user was created successfully ... ');
+                        }
+                    });
+                } else if(data !== null){
+                    res.status(401).send('⚠️ There is already a user with the given id ...');
+                }
+            }
+      });
 }
 
 // the following data can be changed: firstName, password, lastName, userType, email, phone
