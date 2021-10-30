@@ -46,6 +46,41 @@ const getSemesterReservations = (req, res) => {
       });
 };
 
+// search for matches within laboratory, scheduleSection, week, date
+const searchReservations = (req, res) => {
+    var params = JSON.parse(req.params.data);
+    var year = params.year;
+    var semester = params.semester;
+    var name = params.category;
+    var regex = params.filter;
+    var query;
+    switch (name) {
+        case "laboratory":
+            query = {"type":"reservation","year": year, "semester": semester, "laboratory": new RegExp(regex) };
+            break;
+        case "scheduleSection":
+            query = {"type":"reservation","year": year, "semester": semester, "scheduleSection": new RegExp(regex) };
+            break;
+        case "week":
+            query = {"type":"reservation","year": year, "semester": semester, "week": new RegExp(regex) };
+            break;
+        case "date":
+            query = {"type":"reservation","year": year, "semester": semester, "date": new RegExp(regex) };
+            break;
+    }
+    console.log(query);
+
+    const databaseConnection = getConnection();
+    databaseConnection.collection("reservations").find(query, { projection: { } } ).limit(20)
+    .toArray(function(error, data) {
+        if (error) {
+            res.status(400).send('⛔️ An error occurred getting users ... \n[Error]: ' + error);
+        } else {
+            res.status(200).send(data);
+        }
+      });
+}
+
 const createReservation = (req, res) => {
     let type = 'reservation';
     let year = req.body.year;
@@ -133,4 +168,4 @@ const removeReservation = (req, res) => {
 }
 
 
-module.exports = { getAllReservations, getSingleReservation, getSemesterReservations, createReservation, updateReservation, removeReservation }
+module.exports = { getAllReservations, getSingleReservation, getSemesterReservations, searchReservations, createReservation, updateReservation, removeReservation }

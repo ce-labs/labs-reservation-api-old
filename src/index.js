@@ -20,6 +20,7 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpecs));
 app.use('/api/v1/auth', require('./routes/api/auth.routes'));
 app.use('/api/v1/blockades', require('./routes/api/blockades.routes'));
 app.use('/api/v1/reservations', require('./routes/api/reservations.routes'));
+app.use('/api/v1/data', require('./routes/api/data.routes'));
 app.use('/api/v1/users', require('./routes/api/users.routes'));
 app.use('/api/v1/utils', require('./routes/api/utils.routes'));
 
