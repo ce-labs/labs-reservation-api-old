@@ -1,5 +1,5 @@
 const { getConnection } = require('../shared/connection');
-const { getFullDate, jsonConcat } = require('../shared/utils/utils')
+const { getFullDate, jsonConcat, generateRandomPassword } = require('../shared/utils/utils')
 
 const getAllUsers = (req, res) => {
     const databaseConnection = getConnection();
@@ -122,7 +122,7 @@ const searchUsers = (req, res) => {
 
 const createUser = (req, res) => {
     let userId = req.body.userId;
-    let password = req.body.password;
+    let password = generateRandomPassword();
     let userType = req.body.userType;
     let userStatus = 'active';
     let firstName = req.body.firstName;

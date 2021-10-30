@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 function getFullDate(){
     const date = new Date();
     var day = date.getDate().toString();
@@ -25,4 +27,15 @@ function setBlockadeId(lab, date, scheduleSection, day){
     return blockadeId;
 }
 
-module.exports = { getFullDate, jsonConcat, setReservationId, setBlockadeId } 
+const generateRandomPassword = (
+    length = 10,
+    wishlist = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$'
+    ) => 
+        Array.from(crypto.randomFillSync(new Uint32Array(length)))
+             .map((x) => wishlist[x % wishlist.length])
+             .join('')
+    {/*var randomString = Math.random().toString(36).slice(-8);
+    return randomString;*/}
+
+
+module.exports = { getFullDate, jsonConcat, setReservationId, setBlockadeId,generateRandomPassword } 
