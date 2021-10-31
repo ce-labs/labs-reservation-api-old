@@ -3,7 +3,7 @@ const { getFullDate, jsonConcat, setReservationId } = require('../shared/utils/u
 
 const getAllReservations = (req, res) => {
     const databaseConnection = getConnection();
-    databaseConnection.collection("reservations").find({"type":"reservation"}, { projection: { } } ).limit(20)
+    databaseConnection.collection("reservations").find({"type":"reservation"}, { projection: { _id:0 } } ).limit(20)
     .toArray(function(error, data) {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting all reservations ... \n[Error]: ' + error);
@@ -17,7 +17,7 @@ const getSingleReservation = (req, res) => {
     let reservationId = req.params.reservationId;
 
     const databaseConnection = getConnection();
-    databaseConnection.collection("reservations").findOne({"reservationId": reservationId}, { projection: { } }, 
+    databaseConnection.collection("reservations").findOne({"reservationId": reservationId}, { projection: {  _id:0 } }, 
         function(error, data) {
             if (error) {
                 res.status(400).send('⛔️ An error occurred getting single reservation ... \n[Error]: ' + error);
@@ -36,7 +36,7 @@ const getSemesterReservations = (req, res) => {
     let currentSemester = req.params.semester;
 
     const databaseConnection = getConnection();
-    databaseConnection.collection("reservations").find({"type":"reservation", "year":currentYear, "semester":currentSemester}, { projection: { } } ).limit(20)
+    databaseConnection.collection("reservations").find({"type":"reservation", "year":currentYear, "semester":currentSemester}, { projection: {  _id:0 } } ).limit(20)
     .toArray(function(error, data) {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting all reservations ... \n[Error]: ' + error);
@@ -71,7 +71,7 @@ const searchReservations = (req, res) => {
     console.log(query);
 
     const databaseConnection = getConnection();
-    databaseConnection.collection("reservations").find(query, { projection: { } } ).limit(20)
+    databaseConnection.collection("reservations").find(query, { projection: {  _id:0 } } ).limit(20)
     .toArray(function(error, data) {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting users ... \n[Error]: ' + error);

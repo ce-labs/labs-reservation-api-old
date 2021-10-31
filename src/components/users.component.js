@@ -1,9 +1,10 @@
 const { getConnection } = require('../shared/connection');
-const { getFullDate, jsonConcat, generateRandomPassword } = require('../shared/utils/utils')
+const { getFullDate, jsonConcat } = require('../shared/utils/utils');
+const { generateRandomPassword, encrypt } = require('../shared/utils/security');
 
 const getAllUsers = (req, res) => {
     const databaseConnection = getConnection();
-    databaseConnection.collection("users").find({}, { projection: { } } ).limit(20)
+    databaseConnection.collection("users").find({}, { projection: { _id:0 } } ).limit(20)
     .toArray(function(error, data) {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting all users ... \n[Error]: ' + error);
@@ -17,7 +18,7 @@ const getSingleUser = (req, res) => {
     let userId = req.params.userId;
 
     const databaseConnection = getConnection();
-    databaseConnection.collection("users").findOne({"userId": userId}, { projection: { } }, 
+    databaseConnection.collection("users").findOne({"userId": userId}, { projection: { _id:0 } }, 
         function(error, data) {
             if (error) {
                 res.status(400).send('⛔️ An error occurred getting single users ... \n[Error]: ' + error);
@@ -35,7 +36,7 @@ const getUserType = (req, res) => {
     let userId = req.params.userId;
 
     const databaseConnection = getConnection();
-    databaseConnection.collection("users").findOne({"userId": userId}, { projection: { } }, 
+    databaseConnection.collection("users").findOne({"userId": userId}, { projection: {  _id:0} }, 
         function(error, data) {
             if (error) {
                 res.status(400).send('⛔️ An error occurred getting single users ... \n[Error]: ' + error);
@@ -51,10 +52,11 @@ const getUserType = (req, res) => {
 
 
 const getUserStatus = (req, res) => {
+    console.log('testing')
     let userId = req.params.userId;
 
     const databaseConnection = getConnection();
-    databaseConnection.collection("users").findOne({"userId": userId}, { projection: { } }, 
+    databaseConnection.collection("users").findOne({"userId": userId}, { projection: { _id:0 } }, 
         function(error, data) {
             if (error) {
                 res.status(400).send('⛔️ An error occurred getting single users ... \n[Error]: ' + error);
@@ -72,7 +74,7 @@ const getReservationsNumber = (req, res) => {
     let userId = req.params.userId;
 
     const databaseConnection = getConnection();
-    databaseConnection.collection("users").findOne({"userId": userId}, { projection: { } }, 
+    databaseConnection.collection("users").findOne({"userId": userId}, { projection: { _id:0 } }, 
         function(error, data) {
             if (error) {
                 res.status(400).send('⛔️ An error occurred getting single users ... \n[Error]: ' + error);
@@ -110,7 +112,7 @@ const searchUsers = (req, res) => {
     console.log(query);
 
     const databaseConnection = getConnection();
-    databaseConnection.collection("users").find(query, { projection: { } } ).limit(20)
+    databaseConnection.collection("users").find(query, { projection: { _id:0 } } ).limit(20)
     .toArray(function(error, data) {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting users ... \n[Error]: ' + error);
@@ -150,7 +152,7 @@ const createUser = (req, res) => {
     };
 
     const databaseConnection = getConnection();
-    databaseConnection.collection("users").findOne({"userId": userId}, { projection: { } }, 
+    databaseConnection.collection("users").findOne({"userId": userId}, { projection: { _id:0 } }, 
         function(error, data) {
             if (error) {
                 res.status(400).send('⛔️ An error occurred getting single users ... \n[Error]: ' + error);
