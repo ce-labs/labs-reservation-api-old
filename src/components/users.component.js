@@ -9,13 +9,23 @@ const getAllUsers = (req, res) => {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting all users ... \n[Error]: ' + error);
         } else {
+            for(let i = 0; i < data.length; i++) {
+                data[i].userId = encrypt(data[i].userId);
+                data[i].password = encrypt(data[i].password);
+                data[i].phone = encrypt(data[i].phone);
+                data[i].mail = encrypt(data[i].mail);
+                data[i].creationAuthor = encrypt(data[i].creationAuthor);
+                data[i].modificationAuthor = encrypt(data[i].modificationAuthor);
+            } 
             res.status(200).send(data);
+
         }
       });
 };
 
 const getSingleUser = (req, res) => {
     let userId = req.params.userId;
+
 
     const databaseConnection = getConnection();
     databaseConnection.collection("users").findOne({"userId": userId}, { projection: { _id:0 } }, 
@@ -26,6 +36,12 @@ const getSingleUser = (req, res) => {
                 if(data === null){
                     res.status(404).send('⚠️ There are no users with the specified specifications ...');
                 } else{
+                    data.userId = encrypt(data.userId);
+                    data.password = encrypt(data.password);
+                    data.phone = encrypt(data.phone);
+                    data.mail = encrypt(data.mail);
+                    data.creationAuthor = encrypt(data.creationAuthor);
+                    data.modificationAuthor = encrypt(data.modificationAuthor);
                     res.status(200).send(data);
                 }
             }
@@ -52,7 +68,6 @@ const getUserType = (req, res) => {
 
 
 const getUserStatus = (req, res) => {
-    console.log('testing')
     let userId = req.params.userId;
 
     const databaseConnection = getConnection();
@@ -117,6 +132,14 @@ const searchUsers = (req, res) => {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting users ... \n[Error]: ' + error);
         } else {
+            for(let i = 0; i < data.length; i++) {
+                data[i].userId = encrypt(data[i].userId);
+                data[i].password = encrypt(data[i].password);
+                data[i].phone = encrypt(data[i].phone);
+                data[i].mail = encrypt(data[i].mail);
+                data[i].creationAuthor = encrypt(data[i].creationAuthor);
+                data[i].modificationAuthor = encrypt(data[i].modificationAuthor);
+            } 
             res.status(200).send(data);
         }
       });
@@ -135,6 +158,7 @@ const createUser = (req, res) => {
     let creationDate = getFullDate();
     let modificationAuthor = '';
     let modificationDate = '';
+    let reservations = '0';
 
     var user = {
         userId: userId,
@@ -148,7 +172,8 @@ const createUser = (req, res) => {
         creationAuthor: creationAuthor,
         creationDate: creationDate,
         modificationAuthor: modificationAuthor,
-        modificationDate: modificationDate
+        modificationDate: modificationDate,
+        reservations: reservations,
     };
 
     const databaseConnection = getConnection();

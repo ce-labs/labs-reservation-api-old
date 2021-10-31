@@ -1,4 +1,5 @@
 const { getConnection } = require('../shared/connection');
+const { encrypt } = require('../shared/utils/security');
 const { getFullDate, jsonConcat, setReservationId } = require('../shared/utils/utils')
 
 const getAllReservations = (req, res) => {
@@ -8,6 +9,16 @@ const getAllReservations = (req, res) => {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting all reservations ... \n[Error]: ' + error);
         } else {
+            for(let i = 0; i < data.length; i++) {
+                data[i].reservationId = encrypt(data[i].reservationId);
+                data[i].date = encrypt(data[i].date);
+                data[i].description = encrypt(data[i].description);
+                data[i].manager = encrypt(data[i].manager);
+                data[i].creationAuthor = encrypt(data[i].creationAuthor);
+                data[i].creationAuthorMail = encrypt(data[i].creationAuthorMail);
+                data[i].modificationAuthor = encrypt(data[i].modificationAuthor);
+                data[i].modificationAuthorMail = encrypt(data[i].modificationAuthorMail);
+            } 
             res.status(200).send(data);
         }
       });
@@ -25,6 +36,14 @@ const getSingleReservation = (req, res) => {
                 if(data === null){
                     res.status(404).send('⚠️ There are no reservations with the specified specifications ...');
                 } else{
+                    data.reservationId = encrypt(data.reservationId);
+                    data.date = encrypt(data.date);
+                    data.description = encrypt(data.description);
+                    data.manager = encrypt(data.manager);
+                    data.creationAuthor = encrypt(data.creationAuthor);
+                    data.creationAuthorMail = encrypt(data.creationAuthorMail);
+                    data.modificationAuthor = encrypt(data.modificationAuthor);
+                    data.modificationAuthorMail = encrypt(data.modificationAuthorMail);
                     res.status(200).send(data);
                 }
             }
@@ -41,6 +60,16 @@ const getSemesterReservations = (req, res) => {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting all reservations ... \n[Error]: ' + error);
         } else {
+            for(let i = 0; i < data.length; i++) {
+                data[i].reservationId = encrypt(data[i].reservationId);
+                data[i].date = encrypt(data[i].date);
+                data[i].description = encrypt(data[i].description);
+                data[i].manager = encrypt(data[i].manager);
+                data[i].creationAuthor = encrypt(data[i].creationAuthor);
+                data[i].creationAuthorMail = encrypt(data[i].creationAuthorMail);
+                data[i].modificationAuthor = encrypt(data[i].modificationAuthor);
+                data[i].modificationAuthorMail = encrypt(data[i].modificationAuthorMail);
+            } 
             res.status(200).send(data);
         }
       });
@@ -76,6 +105,16 @@ const searchReservations = (req, res) => {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting users ... \n[Error]: ' + error);
         } else {
+            for(let i = 0; i < data.length; i++) {
+                data[i].reservationId = encrypt(data[i].reservationId);
+                data[i].date = encrypt(data[i].date);
+                data[i].description = encrypt(data[i].description);
+                data[i].manager = encrypt(data[i].manager);
+                data[i].creationAuthor = encrypt(data[i].creationAuthor);
+                data[i].creationAuthorMail = encrypt(data[i].creationAuthorMail);
+                data[i].modificationAuthor = encrypt(data[i].modificationAuthor);
+                data[i].modificationAuthorMail = encrypt(data[i].modificationAuthorMail);
+            } 
             res.status(200).send(data);
         }
       });

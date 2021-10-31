@@ -18,6 +18,7 @@ const encrypt = (text) => {
 
     let encryptedData = cipher.update(text, "utf-8", "hex");    
     encryptedData += cipher.final("hex");    
-    console.log("Encrypted message: " + encryptedData);
+    //console.log("Encrypted message: " + encryptedData);
+    return(encryptedData);
 }
 module.exports = { generateRandomPassword, encrypt }
