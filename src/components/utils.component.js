@@ -56,9 +56,9 @@ const getStaff = (req, res) => {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting staff  ... \n[Error]: ' + error);
         } else {
-            for(let i = 0; i < data.length; i++) {
+            {/*for(let i = 0; i < data.length; i++) {
                 data[i].name = encrypt(data[i].name);
-            } 
+            } */}
             res.status(200).send(data);
         }
       });
