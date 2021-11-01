@@ -18,7 +18,6 @@ const encrypt = (text) => {
 
     let encryptedData = cipher.update(text, "utf-8", "hex");    
     encryptedData += cipher.final("hex");    
-    //console.log("Encrypted message: " + encryptedData);
-    return(encryptedData);
+    return({iv: initVector.toString('hex'), key: Securitykey.toString('hex'), content: encryptedData});
 }
 module.exports = { generateRandomPassword, encrypt }
