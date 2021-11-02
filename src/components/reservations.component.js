@@ -75,6 +75,33 @@ const getSemesterReservations = (req, res) => {
       });
 };
 
+const getWeekReservations = (req, res) => {
+    let currentYear = req.params.year;
+    let currentSemester = req.params.semester;
+    let week = req.params.week;
+
+    const databaseConnection = getConnection();
+    databaseConnection.collection("reservations").find({"type":"reservation", "year":currentYear, "semester":currentSemester, "week": week}, { projection: {  _id:0 } } ).limit(20)
+    .toArray(function(error, data) {
+        if (error) {
+            res.status(400).send('⛔️ An error occurred getting all reservations ... \n[Error]: ' + error);
+        } else {
+            {/*for(let i = 0; i < data.length; i++) {
+                data[i].reservationId = encrypt(data[i].reservationId);
+                data[i].date = encrypt(data[i].date);
+                data[i].description = encrypt(data[i].description);
+                data[i].manager = encrypt(data[i].manager);
+                data[i].creationAuthor = encrypt(data[i].creationAuthor);
+                data[i].creationAuthorMail = encrypt(data[i].creationAuthorMail);
+                data[i].modificationAuthor = encrypt(data[i].modificationAuthor);
+                data[i].modificationAuthorMail = encrypt(data[i].modificationAuthorMail);
+            } */}
+            res.status(200).send(data);
+        }
+      });
+};
+
+
 // search for matches within laboratory, scheduleSection, week, date
 const searchReservations = (req, res) => {
     var params = JSON.parse(req.params.data);
@@ -207,4 +234,4 @@ const removeReservation = (req, res) => {
 }
 
 
-module.exports = { getAllReservations, getSingleReservation, getSemesterReservations, searchReservations, createReservation, updateReservation, removeReservation }
+module.exports = { getAllReservations, getSingleReservation, getSemesterReservations, getWeekReservations, searchReservations, createReservation, updateReservation, removeReservation }
