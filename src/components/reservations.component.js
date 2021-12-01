@@ -107,10 +107,12 @@ const searchReservations = (req, res) => {
     var params = JSON.parse(req.params.data);
     var year = params.year;
     var semester = params.semester;
-    var name = params.category;
-    var regex = params.filter;
-    var query;
-    switch (name) {
+    var week = params.week;
+    var laboratory = params.laboratory;
+    var query = {"year": year, "semester": semester, "week": week, "laboratory": laboratory}
+    //var name = params.category;
+    //var regex = params.filter;
+    /*switch (name) {
         case "laboratory":
             query = {"type":"reservation","year": year, "semester": semester, "laboratory": new RegExp(regex) };
             break;
@@ -123,7 +125,8 @@ const searchReservations = (req, res) => {
         case "date":
             query = {"type":"reservation","year": year, "semester": semester, "date": new RegExp(regex) };
             break;
-    }
+    }*/
+
     console.log(query);
 
     const databaseConnection = getConnection();
@@ -132,16 +135,6 @@ const searchReservations = (req, res) => {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting users ... \n[Error]: ' + error);
         } else {
-            {/*for(let i = 0; i < data.length; i++) {
-                data[i].reservationId = encrypt(data[i].reservationId);
-                data[i].date = encrypt(data[i].date);
-                data[i].description = encrypt(data[i].description);
-                data[i].manager = encrypt(data[i].manager);
-                data[i].creationAuthor = encrypt(data[i].creationAuthor);
-                data[i].creationAuthorMail = encrypt(data[i].creationAuthorMail);
-                data[i].modificationAuthor = encrypt(data[i].modificationAuthor);
-                data[i].modificationAuthorMail = encrypt(data[i].modificationAuthorMail);
-            } */}
             res.status(200).send(data);
         }
       });
