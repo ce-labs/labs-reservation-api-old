@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
-const { getAllReservations, getSingleReservation, getSemesterReservations, getWeekReservations, searchReservations, createReservation, updateReservation, removeReservation } = require('../../components/reservations.component');
+const { getAllReservations, getSingleReservation, getSemesterReservations, getWeekReservations,createReservation, updateReservation, removeReservation, filterReservations } = require('../../components/reservations.component');
 
 var jsonParser = bodyParser.json();
 
@@ -14,7 +14,7 @@ router.get('/:year/:semester', jsonParser, getSemesterReservations);
 router.get('/:year/:semester/:week', jsonParser, getWeekReservations);
 
 
-router.get('/reservations/:data', searchReservations);
+router.get('/reservations/:data', filterReservations);
 
 router.post('/', jsonParser, createReservation);
 

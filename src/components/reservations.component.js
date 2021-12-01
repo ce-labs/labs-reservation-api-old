@@ -110,9 +110,27 @@ const searchReservations = (req, res) => {
     var week = params.week;
     var laboratory = params.laboratory;
     var query = {"year": year, "semester": semester, "week": week, "laboratory": laboratory}
-    //var name = params.category;
-    //var regex = params.filter;
-    /*switch (name) {
+    console.log(query);
+
+    const databaseConnection = getConnection();
+    databaseConnection.collection("reservations").find(query, { projection: {  _id:0 } } ).limit(20)
+    .toArray(function(error, data) {
+        if (error) {
+            res.status(400).send('⛔️ An error occurred getting users ... \n[Error]: ' + error);
+        } else {
+            res.status(200).send(data);
+        }
+      });
+}
+
+const filterReservations = (req, res) => {
+    var params = JSON.parse(req.params.data);
+    var year = params.year;
+    var semester = params.semester;
+    var name = params.category;
+    var regex = params.filter;
+    var query;
+    switch (name) {
         case "laboratory":
             query = {"type":"reservation","year": year, "semester": semester, "laboratory": new RegExp(regex) };
             break;
@@ -125,8 +143,7 @@ const searchReservations = (req, res) => {
         case "date":
             query = {"type":"reservation","year": year, "semester": semester, "date": new RegExp(regex) };
             break;
-    }*/
-
+    }
     console.log(query);
 
     const databaseConnection = getConnection();
@@ -227,4 +244,4 @@ const removeReservation = (req, res) => {
 }
 
 
-module.exports = { getAllReservations, getSingleReservation, getSemesterReservations, getWeekReservations, searchReservations, createReservation, updateReservation, removeReservation }
+module.exports = { getAllReservations, getSingleReservation, getSemesterReservations, getWeekReservations,filterReservations, searchReservations, createReservation, updateReservation, removeReservation }
