@@ -9,16 +9,6 @@ const getAllReservations = (req, res) => {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting all reservations ... \n[Error]: ' + error);
         } else {
-            {/*for(let i = 0; i < data.length; i++) {
-                data[i].reservationId = encrypt(data[i].reservationId);
-                data[i].date = encrypt(data[i].date);
-                data[i].description = encrypt(data[i].description);
-                data[i].manager = encrypt(data[i].manager);
-                data[i].creationAuthor = encrypt(data[i].creationAuthor);
-                data[i].creationAuthorMail = encrypt(data[i].creationAuthorMail);
-                data[i].modificationAuthor = encrypt(data[i].modificationAuthor);
-                data[i].modificationAuthorMail = encrypt(data[i].modificationAuthorMail);
-            } */}
             res.status(200).send(data);
         }
       });
@@ -36,14 +26,6 @@ const getSingleReservation = (req, res) => {
                 if(data === null){
                     res.status(404).send('⚠️ There are no reservations with the specified specifications ...');
                 } else{
-                    {/*data.reservationId = encrypt(data.reservationId);
-                    data.date = encrypt(data.date);
-                    data.description = encrypt(data.description);
-                    data.manager = encrypt(data.manager);
-                    data.creationAuthor = encrypt(data.creationAuthor);
-                    data.creationAuthorMail = encrypt(data.creationAuthorMail);
-                    data.modificationAuthor = encrypt(data.modificationAuthor);
-                    data.modificationAuthorMail = encrypt(data.modificationAuthorMail);*/}
                     res.status(200).send(data);
                 }
             }
@@ -60,16 +42,6 @@ const getSemesterReservations = (req, res) => {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting all reservations ... \n[Error]: ' + error);
         } else {
-            {/*for(let i = 0; i < data.length; i++) {
-                data[i].reservationId = encrypt(data[i].reservationId);
-                data[i].date = encrypt(data[i].date);
-                data[i].description = encrypt(data[i].description);
-                data[i].manager = encrypt(data[i].manager);
-                data[i].creationAuthor = encrypt(data[i].creationAuthor);
-                data[i].creationAuthorMail = encrypt(data[i].creationAuthorMail);
-                data[i].modificationAuthor = encrypt(data[i].modificationAuthor);
-                data[i].modificationAuthorMail = encrypt(data[i].modificationAuthorMail);
-            } */}
             res.status(200).send(data);
         }
       });
@@ -86,16 +58,6 @@ const getWeekReservations = (req, res) => {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting all reservations ... \n[Error]: ' + error);
         } else {
-            {/*for(let i = 0; i < data.length; i++) {
-                data[i].reservationId = encrypt(data[i].reservationId);
-                data[i].date = encrypt(data[i].date);
-                data[i].description = encrypt(data[i].description);
-                data[i].manager = encrypt(data[i].manager);
-                data[i].creationAuthor = encrypt(data[i].creationAuthor);
-                data[i].creationAuthorMail = encrypt(data[i].creationAuthorMail);
-                data[i].modificationAuthor = encrypt(data[i].modificationAuthor);
-                data[i].modificationAuthorMail = encrypt(data[i].modificationAuthorMail);
-            } */}
             res.status(200).send(data);
         }
       });
@@ -124,7 +86,9 @@ const searchReservations = (req, res) => {
 }
 
 const filterReservations = (req, res) => {
+    console.log('qasdasdasd');
     var params = JSON.parse(req.params.data);
+    console.log(params)
     var year = params.year;
     var semester = params.semester;
     var name = params.category;
@@ -150,7 +114,7 @@ const filterReservations = (req, res) => {
     databaseConnection.collection("reservations").find(query, { projection: {  _id:0 } } ).limit(20)
     .toArray(function(error, data) {
         if (error) {
-            res.status(400).send('⛔️ An error occurred getting users ... \n[Error]: ' + error);
+            res.status(400).send('⛔️ An error occurred getting reservations ... \n[Error]: ' + error);
         } else {
             res.status(200).send(data);
         }
