@@ -104,9 +104,6 @@ const filterReservations = (req, res) => {
         case "week":
             query = {"type":"reservation","year": year, "semester": semester, "week": new RegExp(regex) };
             break;
-        case "date":
-            query = {"type":"reservation","year": year, "semester": semester, "date": new RegExp(regex) };
-            break;
     }
     console.log(query);
 
@@ -128,7 +125,6 @@ const createReservation = (req, res) => {
     let week = req.body.week;
     let laboratory = req.body.laboratory;
     let day = req.body.day;
-    let date = req.body.date;
     let scheduleSection = req.body.scheduleSection;
     let description = req.body.description;
     let manager = req.body.manager;
@@ -151,7 +147,6 @@ const createReservation = (req, res) => {
         week: week,
         laboratory: laboratory,
         day: day,
-        date: date,
         scheduleSection: scheduleSection,
         description: description,
         manager: manager,

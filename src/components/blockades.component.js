@@ -87,7 +87,6 @@ const createBlockade = (req, res) => {
     let week = 'all';
     let laboratory = req.body.laboratory;
     let day = req.body.day;
-    let date = 'all';
     let scheduleSection = req.body.scheduleSection;
     let description = req.body.description;
     let manager = req.body.manager;
@@ -109,7 +108,6 @@ const createBlockade = (req, res) => {
         week: week,
         laboratory: laboratory,
         day: day,
-        date: date,
         scheduleSection: scheduleSection,
         description: description,
         manager: manager,
