@@ -13,14 +13,14 @@ function jsonConcat(o1, o2) {
     return o1;
 }
 
-function setReservationId(lab, date, scheduleSection){
-    var input = lab.concat('&').concat(date).concat('&').concat(scheduleSection);
+function setReservationId(year, semester, lab, date, scheduleSection, day){
+    var input = year.concat(semester).concat('&').concat(lab).concat(date).concat('&').concat(scheduleSection).concat(day);
     var reservationId = input.replace('/','').replace('/','').replace(':','').replace(':','').replace('-','');
     return reservationId;
 }
 
-function setBlockadeId(lab, date, scheduleSection, day){
-    var input = lab.concat('&').concat(date).concat('&').concat(scheduleSection).concat(day);
+function setBlockadeId(year, semester, lab, date, scheduleSection, day){
+    var input = year.concat(semester).concat('&').concat(lab).concat(date).concat('&').concat(scheduleSection).concat(day);
     var blockadeId = input.replace('/','').replace('/','').replace(':','').replace(':','').replace('-','');
     return blockadeId;
 }

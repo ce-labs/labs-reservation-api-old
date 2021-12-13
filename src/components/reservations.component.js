@@ -140,7 +140,7 @@ const createReservation = (req, res) => {
     let modificationAuthorMail = '';
     let modificationDate = '';
 
-    let reservationId = setReservationId(laboratory, date, scheduleSection);
+    let reservationId = setReservationId(year, semester, laboratory, date, scheduleSection, day);
 
 
     var reservation = {
@@ -165,13 +165,37 @@ const createReservation = (req, res) => {
     };
 
     const databaseConnection = getConnection();
-    databaseConnection.collection('reservations').insertOne(reservation, (error, data) => {
-        if(error) {
-            res.status(400).send('⛔️ An error occurred creating reservation ... \n[Error]: ' + error);  
-        } else {
-            res.status(200).send('☑️ The reservation was created successfully ... ');
-        }
-    });
+    databaseConnection.collection("reservations").findOne({"reservationId": reservationId}, { projection: { _id:0 } }, 
+        function(error, data) {
+            if (error) {
+                res.status(400).send('⛔️ An error occurred getting single reservation ... \n[Error]: ' + error);
+            } else {
+                if(data === null){                       
+
+                    databaseConnection.collection("reservations").findOne({"year":year,"semester":semester,"day":day,"scheduleSection":scheduleSection}, (error, data) => {
+                        if(error){ res.status(400).send('⛔️ An error occurred getting blockades ... \n[Error]: ' + error); }
+                        else {
+                            if(data === null){
+                                    databaseConnection.collection('reservations').insertOne(reservation, (error, data) => {
+                                    if(error){
+                                        res.status(400).send('⛔️ An error occurred creating reservation ... \n[Error]: ' + error);  
+                                    } else {
+                                        res.status(200).send('☑️ The reservation was created successfully ... ');
+                                    }
+                                    });
+                            } else {
+                                res.status(401).send('⚠️ There is a blockade in specified schedule section ...');
+                            }
+                        }
+
+                    })
+
+
+                } else if(data !== null){
+                    res.status(401).send('⚠️ There is a reservation with the given id ...');
+                }
+            }
+      });
 }
 
 // the following data can be changed: description, manager, showDescription

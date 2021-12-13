@@ -9,15 +9,6 @@ const getAllBlockades = (req, res) => {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting all blockades ... \n[Error]: ' + error);
         } else {
-            {/*for(let i = 0; i < data.length; i++) {
-                data[i].reservationId = encrypt(data[i].reservationId);
-                data[i].description = encrypt(data[i].description);
-                data[i].manager = encrypt(data[i].manager);
-                data[i].creationAuthor = encrypt(data[i].creationAuthor);
-                data[i].creationAuthorMail = encrypt(data[i].creationAuthorMail);
-                data[i].modificationAuthor = encrypt(data[i].modificationAuthor);
-                data[i].modificationAuthorMail = encrypt(data[i].modificationAuthorMail);
-            } */}
             res.status(200).send(data);
         }
       });
@@ -35,13 +26,6 @@ const getSingleBlockade = (req, res) => {
                 if(data === null){
                     res.status(404).send('⚠️ There are no blockades with the specified specifications ...');
                 } else{
-                    {/*data.reservationId = encrypt(data.reservationId);
-                    data.description = encrypt(data.description);
-                    data.manager = encrypt(data.manager);
-                    data.creationAuthor = encrypt(data.creationAuthor);
-                    data.creationAuthorMail = encrypt(data.creationAuthorMail);
-                    data.modificationAuthor = encrypt(data.modificationAuthor);
-                    data.modificationAuthorMail = encrypt(data.modificationAuthorMail);*/}
                     res.status(200).send(data);
                 }
             }
@@ -60,15 +44,6 @@ const getSemesterBlockades= (req, res) => {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting all reservations ... \n[Error]: ' + error);
         } else {
-            {/*for(let i = 0; i < data.length; i++) {
-                data[i].reservationId = encrypt(data[i].reservationId);
-                data[i].description = encrypt(data[i].description);
-                data[i].manager = encrypt(data[i].manager);
-                data[i].creationAuthor = encrypt(data[i].creationAuthor);
-                data[i].creationAuthorMail = encrypt(data[i].creationAuthorMail);
-                data[i].modificationAuthor = encrypt(data[i].modificationAuthor);
-                data[i].modificationAuthorMail = encrypt(data[i].modificationAuthorMail);
-            } */}
             res.status(200).send(data);        }
       });
 };
@@ -99,17 +74,9 @@ const searchBlockades = (req, res) => {
     .toArray(function(error, data) {
         if (error) {
             res.status(400).send('⛔️ An error occurred getting users ... \n[Error]: ' + error);
-        } else {
-            for(let i = 0; i < data.length; i++) {
-                {/*data[i].reservationId = encrypt(data[i].reservationId);
-                data[i].description = encrypt(data[i].description);
-                data[i].manager = encrypt(data[i].manager);
-                data[i].creationAuthor = encrypt(data[i].creationAuthor);
-                data[i].creationAuthorMail = encrypt(data[i].creationAuthorMail);
-                data[i].modificationAuthor = encrypt(data[i].modificationAuthor);
-                data[i].modificationAuthorMail = encrypt(data[i].modificationAuthorMail);*/}
-            } 
-            res.status(200).send(data);        }
+        } else { 
+            res.status(200).send(data);        
+        }
       });
 }
 
@@ -132,8 +99,7 @@ const createBlockade = (req, res) => {
     let modificationAuthorMail = '';
     let modificationDate = '';
 
-    let blockadeId = setBlockadeId(laboratory, date, scheduleSection, day);
-
+    let blockadeId = setBlockadeId(year, semester, laboratory, date, scheduleSection, day);
 
     var blockade = {
         reservationId: blockadeId,
@@ -157,13 +123,24 @@ const createBlockade = (req, res) => {
     };
 
     const databaseConnection = getConnection();
-    databaseConnection.collection('reservations').insertOne(blockade, (error, data) => {
-        if(error) {
-            res.status(400).send('⛔️ An error occurred creating blockade ... \n[Error]: ' + error);  
-        } else {
-            res.status(200).send('☑️ The blockade was created successfully ... ');
-        }
-    });
+    databaseConnection.collection("reservations").findOne({"reservationId": blockadeId}, { projection: { _id:0 } }, 
+        function(error, data) {
+            if (error) {
+                res.status(400).send('⛔️ An error occurred getting single blockade ... \n[Error]: ' + error);
+            } else {
+                if(data === null){
+                    databaseConnection.collection('reservations').insertOne(blockade, (error, data) => {
+                        if(error){
+                            res.status(400).send('⛔️ An error occurred creating blockade ... \n[Error]: ' + error);  
+                        } else {
+                            res.status(200).send('☑️ The blockade was created successfully ... ');
+                        }
+                    });
+                } else if(data !== null){
+                    res.status(401).send('⚠️ There is blockade with the given id ...');
+                }
+            }
+      });
 }
 
 
