@@ -167,7 +167,7 @@ const createReservation = (req, res) => {
             } else {
                 if(data === null){                       
 
-                    databaseConnection.collection("reservations").findOne({"year":year,"semester":semester,"day":day,"scheduleSection":scheduleSection}, (error, data) => {
+                    databaseConnection.collection("reservations").findOne({"year":year,"semester":semester,"day":day,"scheduleSection":scheduleSection,"laboratory":laboratory}, (error, data) => {
                         if(error){ res.status(400).send('⛔️ An error occurred getting blockades ... \n[Error]: ' + error); }
                         else {
                             if(data === null){
