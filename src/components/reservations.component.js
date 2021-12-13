@@ -140,7 +140,7 @@ const createReservation = (req, res) => {
     let modificationAuthorMail = '';
     let modificationDate = '';
 
-    let reservationId = setReservationId(year, semester, laboratory, date, scheduleSection, day);
+    let reservationId = setReservationId(year, semester, week, laboratory, scheduleSection, day);
 
 
     var reservation = {

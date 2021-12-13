@@ -99,7 +99,7 @@ const createBlockade = (req, res) => {
     let modificationAuthorMail = '';
     let modificationDate = '';
 
-    let blockadeId = setBlockadeId(year, semester, laboratory, date, scheduleSection, day);
+    let blockadeId = setBlockadeId(year, semester, laboratory, scheduleSection, day);
 
     var blockade = {
         reservationId: blockadeId,
