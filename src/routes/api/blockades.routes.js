@@ -1,21 +1,23 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 
-const { getAllBlockades, getSingleBlockade, createBlockade, updateBlockade, removeBlockade, getSemesterBlockades } = require('../../components/blockades.component');
+const {
+  getAllBlockades,
+  getSingleBlockade,
+  createBlockade,
+  updateBlockade,
+  removeBlockade,
+  getSemesterBlockades,
+} = require("../../components/blockades.component");
 
 var jsonParser = bodyParser.json();
 
-router.get('/all', getAllBlockades);
-
-router.get('/:blockadeId', getSingleBlockade);
-
-router.get('/:year/:semester', jsonParser, getSemesterBlockades);
-
-router.post('/', jsonParser, createBlockade);
-
-router.put('/:blockadeId', jsonParser, updateBlockade);
-
-router.delete('/:blockadeId', removeBlockade);
+router.get("/all", getAllBlockades);
+router.get("/:blockadeId", getSingleBlockade);
+router.get("/:year/:semester", jsonParser, getSemesterBlockades);
+router.post("/", jsonParser, createBlockade);
+router.put("/:blockadeId", jsonParser, updateBlockade);
+router.delete("/:blockadeId", removeBlockade);
 
 module.exports = router;

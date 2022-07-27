@@ -1,11 +1,9 @@
-
-function isCorrectPassword(inputPassword, storedPassword) {
-    if(inputPassword != storedPassword) {
-        return false;
-    } else {
-        return true;
-    }
+function isCorrect(input, stored) {
+  if (input != stored) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
-module.exports = { isCorrectPassword }
-
+module.exports = { isCorrect };
