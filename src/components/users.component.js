@@ -1,3 +1,13 @@
+/*
+=================================================================================
+* Sistema de Reservación de Laboratorios CE - v1.0.0
+=================================================================================
+* Copyright 2022 ce-labs (https://github.com/ce-labs)
+=================================================================================
+* The above copyright notice and this permission notice shall 
+  be included in all copies or substantial portions of the Software.
+*/
+
 const { getConnection } = require("../shared/connection");
 const { getFullDate, jsonConcat } = require("../shared/utils/utils");
 const { generateRandomPassword } = require("../shared/utils/security");
@@ -46,66 +56,6 @@ const getSingleUser = (req, res) => {
               .send("⚠️ There are no users with the given specifications ...");
           } else {
             res.status(200).send(data);
-          }
-        }
-      }
-    );
-};
-
-const getUserType = (req, res) => {
-  let userId = req.params.userId;
-
-  const databaseConnection = getConnection();
-  databaseConnection
-    .collection("users")
-    .findOne(
-      { userId: userId },
-      { projection: { _id: 0 } },
-      function (error, data) {
-        if (error) {
-          res
-            .status(400)
-            .send(
-              "⛔️ An error occurred getting single users ... \n[Error]: " +
-                error
-            );
-        } else {
-          if (data === null) {
-            res
-              .status(404)
-              .send("⚠️ There are no users with the given specifications ...");
-          } else {
-            res.status(200).send(data.userType);
-          }
-        }
-      }
-    );
-};
-
-const getUserStatus = (req, res) => {
-  let userId = req.params.userId;
-
-  const databaseConnection = getConnection();
-  databaseConnection
-    .collection("users")
-    .findOne(
-      { userId: userId },
-      { projection: { _id: 0 } },
-      function (error, data) {
-        if (error) {
-          res
-            .status(400)
-            .send(
-              "⛔️ An error occurred getting single users ... \n[Error]: " +
-                error
-            );
-        } else {
-          if (data === null) {
-            res
-              .status(404)
-              .send("⚠️ There are no users with the given specifications ...");
-          } else {
-            res.status(200).send(data.userStatus);
           }
         }
       }
@@ -212,16 +162,23 @@ const createUser = (req, res) => {
   };
 
   var mailOptions = {
-    from: "laboratorioscefk@gmail.com",
+    from: "celabscr@gmail.com",
     to: mail,
-    subject: "[SISTEMA DE RESERVACIÓN DE LABORATORIOS] Credenciales de Usuario",
+    subject:
+      "[SISTEMA DE RESERVACIÓN DE LABORATORIOS] Credenciales de Usuario",
     text:
+      "Hola " + firstName + "," +
+      "\n\n" +
+      "Bienvenido al Sistema de Reservación de Laboratorios," +
+      "\n" +
       "Utilice las siguientes credenciales para iniciar sesión en la aplicación: \nNombre de Usuario: " +
       userId +
       "\nContraseña: " +
       password +
-      "\nSe le recomienda cambiar la contraseña al ingresar al sistema." +
-      "\nCualquier consulta, envie un correo electrónico a la dirección: laboratorioscefk@gmail.com",
+      "\n" +
+      "Se le recomienda cambiar la contraseña al ingresar al sitio." +
+      "\n\n" +
+      "\nCualquier consulta, envie un correo electrónico a la dirección: celabscr@gmail.com",
   };
 
   const databaseConnection = getConnection();
@@ -336,8 +293,6 @@ const removeUser = (req, res) => {
 module.exports = {
   getAllUsers,
   getSingleUser,
-  getUserType,
-  getUserStatus,
   getReservationsNumber,
   searchUsers,
   createUser,

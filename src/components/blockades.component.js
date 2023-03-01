@@ -1,3 +1,13 @@
+/*
+=================================================================================
+* Sistema de Reservación de Laboratorios CE - v1.0.0
+=================================================================================
+* Copyright 2022 ce-labs (https://github.com/ce-labs)
+=================================================================================
+* The above copyright notice and this permission notice shall 
+  be included in all copies or substantial portions of the Software.
+*/
+
 const { getConnection } = require("../shared/connection");
 const { encrypt } = require("../shared/utils/security");
 const {
@@ -88,38 +98,16 @@ const getSemesterBlockades = (req, res) => {
 
 // search for matches within laboratory, scheduleSection, day
 const searchBlockades = (req, res) => {
-  var params = JSON.parse(req.params.data);
-  var year = params.year;
-  var semester = params.semester;
-  var name = params.category;
-  var regex = params.filter;
-  var query;
-  switch (name) {
-    case "laboratory":
-      query = {
-        type: "blockade",
-        year: year,
-        semester: semester,
-        laboratory: new RegExp(regex),
-      };
-      break;
-    case "scheduleSection":
-      query = {
-        type: "blockade",
-        year: year,
-        semester: semester,
-        scheduleSection: new RegExp(regex),
-      };
-      break;
-    case "day":
-      query = {
-        type: "blockade",
-        year: year,
-        semester: semester,
-        day: new RegExp(regex),
-      };
-      break;
-  }
+  var year = req.params.year;
+  var semester = req.params.semester;
+  var laboratory = req.params.laboratory;
+
+  var query = {
+    year: year,
+    semester: semester,
+    laboratory: laboratory,
+    type: 'blockade'
+  };
   console.log(query);
 
   const databaseConnection = getConnection();
@@ -131,7 +119,7 @@ const searchBlockades = (req, res) => {
       if (error) {
         res
           .status(400)
-          .send("⛔️ An error occurred getting users ... \n[Error]: " + error);
+          .send("⛔️ An error occurred getting blockades ... \n[Error]: " + error);
       } else {
         res.status(200).send(data);
       }

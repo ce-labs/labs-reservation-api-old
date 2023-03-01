@@ -1,3 +1,13 @@
+/*
+=================================================================================
+* Sistema de Reservación de Laboratorios CE - v1.0.0
+=================================================================================
+* Copyright 2022 ce-labs (https://github.com/ce-labs)
+=================================================================================
+* The above copyright notice and this permission notice shall 
+  be included in all copies or substantial portions of the Software.
+*/
+
 const jwt = require("jsonwebtoken");
 const { getConnection } = require("../shared/connection");
 const { isCorrect } = require("../shared/auth/auth.functions");
@@ -68,14 +78,22 @@ const getRecoveryCode = (req, res) => {
         let code = generateRecoveryCode();
 
         var mailOptions = {
-          from: "laboratorioscefk@gmail.com",
+          from: "celabscr@gmail.com",
           to: mail,
           subject:
             "[SISTEMA DE RESERVACIÓN DE LABORATORIOS] Código de Recuperación de 4 Dígitos",
           text:
+            "Hola, " +
+            "\n\n" +
+            "Alguien solicitó una nueva contraseña para su cuenta asociada con el correo " +
+            mail +
+            "\n" +
+            "Aún no se han realizado cambios en su cuenta." +
+            "\n\n" +
             "Utilice el siguiente código de recuperación para cambiar su contraseña: \nCódigo: " +
             code +
-            "\nCualquier consulta, envie un correo electrónico a la dirección: laboratorioscefk@gmail.com",
+            "\n\n" +
+            "\nCualquier consulta, envie un correo electrónico a la dirección: celabscr@gmail.com",
         };
 
         let recoveryCode = { recoveryCode: code };

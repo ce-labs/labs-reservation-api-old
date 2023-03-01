@@ -1,3 +1,13 @@
+/*
+=================================================================================
+* Sistema de Reservación de Laboratorios CE - v1.0.0
+=================================================================================
+* Copyright 2022 ce-labs (https://github.com/ce-labs)
+=================================================================================
+* The above copyright notice and this permission notice shall 
+  be included in all copies or substantial portions of the Software.
+*/
+
 const { getConnection } = require("../shared/connection");
 const { encrypt } = require("../shared/utils/security");
 const {
@@ -148,7 +158,6 @@ const searchReservations = (req, res) => {
 };
 
 const filterReservations = (req, res) => {
-  console.log("qasdasdasd");
   var params = JSON.parse(req.params.data);
   console.log(params);
   var year = params.year;
@@ -278,7 +287,7 @@ const createReservation = (req, res) => {
                   res
                     .status(400)
                     .send(
-                      "⛔️ An error occurred getting blockades ... \n[Error]: " +
+                      "⛔️ An error occurred getting reservations ... \n[Error]: " +
                         error
                     );
                 } else {
