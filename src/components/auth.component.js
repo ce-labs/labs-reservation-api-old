@@ -93,7 +93,7 @@ const getRecoveryCode = (req, res) => {
             "Utilice el siguiente código de recuperación para cambiar su contraseña: \nCódigo: " +
             code +
             "\n\n" +
-            "\nCualquier consulta, envie un correo electrónico a la dirección: celabscr@gmail.com",
+            "\nPara cualquier consulta, envíe un correo electrónico a la dirección: laboratorioscefk@gmail.com",
         };
 
         let recoveryCode = { recoveryCode: code };

@@ -15,6 +15,7 @@ const {
   jsonConcat,
   setReservationId,
 } = require("../shared/utils/utils");
+const { transporter } = require("../shared/mailer");
 
 const getAllReservations = (req, res) => {
   const databaseConnection = getConnection();
@@ -303,11 +304,44 @@ const createReservation = (req, res) => {
                                 error
                             );
                         } else {
+                          var mailOptions = {
+                            from: "celabscr@gmail.com",
+                            to: creationAuthorMail,
+                            subject:
+                              "[SISTEMA DE RESERVACIÓN DE LABORATORIOS] Confirmación de Reservación",
+                            text:
+                              "Hola," +
+                              "\n\n" +
+                              "El motivo del mensaje es para confirmar la reserva de laboratorio con las siguientes especificaciones: " +
+                              "\n\n" +
+                              "Semestre: " +
+                              semester + "-" + "Año: " + year +
+                              "\n" +
+                              "Semana: " +
+                              week +
+                              "\n" +
+                              "Laboratorio: " +
+                              laboratory +
+                              "\n" +
+                              "Horario: " +
+                              scheduleSection +
+                              "\n\n" +
+                              "\nPara cualquier consulta, envíe un correo electrónico a la dirección: laboratorioscefk@gmail.com",
+                          };
+
+
                           res
                             .status(200)
                             .send(
                               "☑️ The reservation was created successfully ... "
                             );
+                            transporter.sendMail(mailOptions, function (error, info) {
+                              if (error) {
+                                console.log(error);
+                              } else {
+                                console.log("Mail sended: " + info.response);
+                              }
+                            });
                         }
                       });
                   } else {

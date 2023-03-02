@@ -171,14 +171,14 @@ const createUser = (req, res) => {
       "\n\n" +
       "Bienvenido al Sistema de Reservación de Laboratorios," +
       "\n" +
-      "Utilice las siguientes credenciales para iniciar sesión en la aplicación: \nNombre de Usuario: " +
+      "Utilice las siguientes credenciales para iniciar sesión en el sistema (https://labsreservation.netlify.app/): \n\nNombre de Usuario: " +
       userId +
       "\nContraseña: " +
       password +
-      "\n" +
+      "\n\n" +
       "Se le recomienda cambiar la contraseña al ingresar al sitio." +
       "\n\n" +
-      "\nCualquier consulta, envie un correo electrónico a la dirección: celabscr@gmail.com",
+      "\nPara cualquier consulta, envíe un correo electrónico a la dirección: laboratorioscefk@gmail.com",
   };
 
   const databaseConnection = getConnection();
