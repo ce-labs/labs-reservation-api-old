@@ -314,11 +314,9 @@ const createReservation = (req, res) => {
                               "\n\n" +
                               "El motivo del mensaje es para confirmar la reserva de laboratorio con las siguientes especificaciones: " +
                               "\n\n" +
-                              "Semestre: " +
-                              semester + "-" + "Año: " + year +
+                              "Semestre: " + semester + " - " + "Año: " + year +
                               "\n" +
-                              "Semana: " +
-                              week +
+                              "Semana: " + week + " - " + "Día: " + day +
                               "\n" +
                               "Laboratorio: " +
                               laboratory +
