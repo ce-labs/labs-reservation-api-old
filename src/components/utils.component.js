@@ -15,7 +15,7 @@ const getCourses = (req, res) => {
   databaseConnection
     .collection("coursesList")
     .find({}, { projection: { _id: 0 } })
-    .limit(20)
+    .limit(25)
     .toArray(function (error, data) {
       if (error) {
         res
@@ -34,7 +34,7 @@ const getLabs = (req, res) => {
   databaseConnection
     .collection("labsList")
     .find({}, { projection: { _id: 0 } })
-    .limit(20)
+    .limit(25)
     .toArray(function (error, data) {
       if (error) {
         res
@@ -53,7 +53,7 @@ const getScheduleData = (req, res) => {
   databaseConnection
     .collection("scheduleData")
     .find({}, { projection: { _id: 0 } })
-    .limit(20)
+    .limit(25)
     .toArray(function (error, data) {
       if (error) {
         res
@@ -73,7 +73,7 @@ const getScheduleDays = (req, res) => {
   databaseConnection
     .collection("scheduleDays")
     .find({}, { projection: { _id: 0 } })
-    .limit(20)
+    .limit(25)
     .toArray(function (error, data) {
       if (error) {
         res
@@ -90,7 +90,7 @@ const getStaff = (req, res) => {
   databaseConnection
     .collection("staff")
     .find({}, { projection: { _id: 0 } })
-    .limit(20)
+    .limit(25)
     .toArray(function (error, data) {
       if (error) {
         res
@@ -107,7 +107,7 @@ const getUserTypes = (req, res) => {
   databaseConnection
     .collection("userTypes")
     .find({}, { projection: { _id: 0 } })
-    .limit(20)
+    .limit(25)
     .toArray(function (error, data) {
       if (error) {
         res
@@ -126,7 +126,7 @@ const getSemesterData = (req, res) => {
   databaseConnection
     .collection("semester")
     .find({}, { projection: { _id: 0 } })
-    .limit(20)
+    .limit(25)
     .toArray(function (error, data) {
       if (error) {
         res
