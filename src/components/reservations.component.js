@@ -304,6 +304,27 @@ const createReservation = (req, res) => {
                                 error
                             );
                         } else {
+                          var mailOptionsRecord = {
+                            from: "celabscr@gmail.com",
+                            to: "laboratorioscefk@gmail.com",
+                            subject:
+                              "[SISTEMA DE RESERVACIÓN DE LABORATORIOS] Confirmación de Reservación",
+                            text:
+                              "Hola," +
+                              "\n\n" +
+                              "Se ha realizado una nueva reserva de laboratorio con las siguientes especificaciones: " +
+                              "\n\n" +
+                              "Nombre: " + creationAuthor.firstName + " - " + "Correo: " + creationAuthorMail +
+                              "\n" +
+                              "Semana: " + week + " - " + "Día: " + day +
+                              "\n" +
+                              "Laboratorio: " +
+                              laboratory +
+                              "\n" +
+                              "Horario: " +
+                              scheduleSection 
+                          };
+
                           var mailOptions = {
                             from: "celabscr@gmail.com",
                             to: creationAuthorMail,
@@ -334,6 +355,13 @@ const createReservation = (req, res) => {
                               "☑️ The reservation was created successfully ... "
                             );
                             transporter.sendMail(mailOptions, function (error, info) {
+                              if (error) {
+                                console.log(error);
+                              } else {
+                                console.log("Mail sended: " + info.response);
+                              }
+                            });
+                            transporter.sendMail(mailOptionsRecord, function (error, info) {
                               if (error) {
                                 console.log(error);
                               } else {
