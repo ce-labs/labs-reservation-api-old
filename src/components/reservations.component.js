@@ -314,7 +314,7 @@ const createReservation = (req, res) => {
                               "\n\n" +
                               "Se ha realizado una nueva reserva de laboratorio con las siguientes especificaciones: " +
                               "\n\n" +
-                              "Nombre: " + creationAuthor.firstName + " - " + "Correo: " + creationAuthorMail +
+                              creationAuthor.firstName + " " + creationAuthor.lastName + " - " + creationAuthorMail +
                               "\n" +
                               "Semana: " + week + " - " + "Día: " + day +
                               "\n" +
